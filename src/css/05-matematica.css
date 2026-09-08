@@ -1,0 +1,176 @@
+/* ------------------------------------------------------------------
+   Matematica: formule, calcolatrice, colonna, tabelline, passaggi
+   ------------------------------------------------------------------ */
+
+/* Formule scritte in modo "come sul quaderno" ---------------------- */
+.mate {
+  font-family: var(--font-lettura);
+  font-size: 1.45em; line-height: 1.9; letter-spacing: .02em;
+  display: inline-flex; align-items: center; flex-wrap: wrap; gap: .12em;
+  overflow-wrap: break-word;
+}
+.mate-blocco { display: block; text-align: center; padding: 10px 4px; overflow-x: auto; }
+.mate .frazione {
+  display: inline-flex; flex-direction: column; align-items: center;
+  vertical-align: middle; margin: 0 .18em; line-height: 1.15;
+}
+.mate .frazione .sopra { padding: 0 .32em; border-bottom: 2px solid currentColor; }
+.mate .frazione .sotto { padding: 0 .32em; }
+.mate sup { font-size: .68em; vertical-align: super; line-height: 0; }
+.mate .radice { display: inline-flex; align-items: stretch; margin: 0 .1em; }
+.mate .radice .segno { font-size: 1.1em; }
+.mate .radice .dentro { border-top: 2px solid currentColor; padding: 0 .22em; margin-top: .12em; }
+.mate .operatore { margin: 0 .22em; }
+/* Il segno = sta dentro la riga, non da solo su una riga sua:
+   un'equazione si legge tutta insieme. */
+.mate .uguale { margin: 0 .55em; font-weight: 700; }
+.mate mark {
+  background: var(--evidenzia); color: #16242e; border-radius: 5px;
+  padding: 0 .18em; box-shadow: 0 0 0 2px var(--evidenzia);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+html[data-tema="scura"] .mate mark, html[data-tema="contrasto"] .mate mark { color: #fff; }
+
+/* Passaggi guidati ------------------------------------------------- */
+.passo {
+  border: 2px solid var(--bordo); border-left: 8px solid var(--primario);
+  border-radius: var(--raggio-s); background: var(--superficie);
+  padding: 12px 14px; margin-bottom: 12px;
+}
+.passo .numero { font-weight: 700; color: var(--primario); letter-spacing: .06em; text-transform: uppercase; font-size: .86em; }
+.passo .spiega { color: var(--testo-soft); margin-top: 6px; }
+.passo.controllo { border-left-color: var(--ok); background: var(--ok-chiaro); }
+.passo-solo { border-left-width: 12px; }
+.passo-nav { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+
+.cosa-faccio { display: grid; gap: 8px; }
+.cosa-faccio .riga {
+  display: grid; grid-template-columns: 1fr; gap: 4px;
+  border: 2px solid var(--bordo); border-radius: var(--raggio-s); padding: 10px 12px;
+  background: var(--superficie);
+}
+@media (min-width: 700px) { .cosa-faccio .riga { grid-template-columns: 1.2fr 1fr; align-items: center; gap: 14px; } }
+.cosa-faccio .riga .nota { color: var(--testo-soft); }
+
+/* Semaforo di affidabilità ---------------------------------------- */
+.semaforo { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 2px solid var(--bordo); }
+.semaforo.verde { background: var(--ok-chiaro); color: var(--ok); border-color: var(--ok); }
+.semaforo.giallo { background: var(--attenzione-chiaro); color: var(--attenzione); border-color: var(--attenzione); }
+.semaforo.rosso { background: var(--errore-chiaro); color: var(--errore); border-color: var(--errore); }
+
+/* Calcolatrice ----------------------------------------------------- */
+.calc-display {
+  background: var(--superficie-2); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  padding: 12px 14px; margin-bottom: 12px; text-align: right; overflow-x: auto;
+}
+.calc-display .espressione { font-family: var(--font-mono); font-size: 1.25em; min-height: 1.6em; word-break: break-all; }
+.calc-display .risultato { font-size: 2em; font-weight: 700; min-height: 1.3em; }
+.calc-tasti { display: grid; gap: 8px; grid-template-columns: repeat(4, 1fr); }
+.calc-tasti.scientifica { grid-template-columns: repeat(4, 1fr); }
+@media (min-width: 620px) { .calc-tasti.scientifica { grid-template-columns: repeat(6, 1fr); } }
+.calc-tasti button {
+  min-height: 56px; font-size: 1.15em; font-weight: 700;
+  border: 2px solid var(--bordo); border-radius: var(--raggio-s);
+  background: var(--superficie); color: var(--testo); cursor: pointer;
+}
+.calc-tasti button:hover { background: var(--superficie-2); }
+.calc-tasti button.op { background: var(--primario-chiaro); color: var(--primario); }
+.calc-tasti button.uguale { background: var(--primario); color: var(--su-primario); border-color: var(--primario); }
+.calc-tasti button.canc { background: var(--errore-chiaro); color: var(--errore); }
+.calc-tasti button.fn { font-size: .98em; }
+
+/* Tastiera dei simboli matematici --------------------------------- */
+.tastiera-mate { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.tastiera-mate button {
+  min-width: 46px; min-height: 46px; padding: 4px 10px;
+  border: 2px solid var(--bordo); border-radius: 10px; background: var(--superficie);
+  font-weight: 700; cursor: pointer;
+}
+.tastiera-mate button:hover { background: var(--primario-chiaro); }
+
+/* Operazioni in colonna -------------------------------------------- */
+.colonna-griglia { display: inline-block; font-family: var(--font-mono); font-size: clamp(1.3rem, 6vw, 2rem); }
+.colonna-riga { display: flex; justify-content: flex-end; }
+.colonna-cella {
+  width: 1.7em; height: 1.9em; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--bordo); background: var(--superficie);
+}
+.colonna-cella.riporto { height: 1.3em; font-size: .62em; color: var(--errore); background: var(--errore-chiaro); }
+.colonna-cella.segno { border: none; background: transparent; font-weight: 700; }
+.colonna-riga.linea .colonna-cella { border-top: 4px solid var(--testo); }
+.colonna-intestazioni .colonna-cella { border: none; font-size: .5em; color: var(--testo-soft); height: auto; text-align: center; line-height: 1.2; }
+.colonna-cella input {
+  width: 100%; height: 100%; border: none; background: transparent; text-align: center;
+  font: inherit; padding: 0; -moz-appearance: textfield;
+}
+.colonna-cella input::-webkit-outer-spin-button,
+.colonna-cella input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.colonna-cella:focus-within { background: var(--primario-chiaro); outline: 3px solid var(--primario); }
+
+/* Tavola pitagorica ------------------------------------------------ */
+.pitagorica { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+/* Celle in pixel, non in em: un dito ha sempre bisogno della stessa area,
+   anche quando il testo è piccolo. Se non ci stanno, la tabella scorre in
+   orizzontale (sta dentro .tabella-scroll) invece di rimpicciolire i tasti. */
+.pitagorica td, .pitagorica th {
+  border: 1px solid var(--bordo);
+  min-width: 40px; height: 44px; text-align: center; padding: 0;
+  font-size: clamp(.9rem, 2.6vw, 1.05rem);
+}
+.pitagorica th { background: var(--superficie-2); font-weight: 700; }
+.pitagorica td button { width: 100%; height: 100%; min-height: 44px; border: none; background: var(--superficie); cursor: pointer; font: inherit; }
+.pitagorica td.evid button { background: var(--primario-chiaro); }
+.pitagorica td.scelto button { background: var(--primario); color: var(--su-primario); font-weight: 700; }
+.pitagorica.nascondi td button { color: transparent; }
+.pitagorica.nascondi td.svelato button { color: inherit; }
+
+/* Frazioni disegnate ------------------------------------------------ */
+.torta { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; justify-content: center; }
+.barra-frazione { display: flex; width: min(100%, 420px); height: 54px; border: 2px solid var(--testo); border-radius: 8px; overflow: hidden; }
+.barra-frazione .fetta { flex: 1 1 0; border-right: 1px solid var(--testo); }
+.barra-frazione .fetta:last-child { border-right: none; }
+.barra-frazione .fetta.piena { background: var(--primario); }
+
+/* Retta dei numeri / grafici --------------------------------------- */
+.tela-wrap { overflow-x: auto; background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio); padding: 8px; }
+canvas.tela { display: block; width: 100%; height: auto; touch-action: none; background: var(--superficie); border-radius: 8px; }
+
+/* Percentuali ------------------------------------------------------- */
+.perc-barra { height: 40px; border: 2px solid var(--testo); border-radius: 8px; overflow: hidden; background: var(--superficie-2); }
+.perc-barra .riempi { height: 100%; background: var(--primario); }
+.perc-blocchi { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.perc-blocchi .blocco { border: 2px solid var(--bordo); border-radius: var(--raggio-s); padding: 10px; text-align: center; background: var(--superficie); }
+.perc-blocchi .blocco .et { font-size: .8em; text-transform: uppercase; letter-spacing: .08em; color: var(--testo-soft); font-weight: 700; }
+.perc-blocchi .blocco .val { font-size: 1.5em; font-weight: 700; }
+
+/* "Lo risolvo io": il quaderno dei passaggi ------------------------- */
+.riga-eq {
+  display: grid;
+  grid-template-columns: 2.2em 1fr auto;
+  gap: 8px; align-items: center;
+  padding: 8px; margin-bottom: 8px;
+  border: 2px solid var(--bordo); border-left-width: 8px;
+  border-radius: var(--raggio-s); background: var(--superficie);
+}
+.riga-eq .numero-riga {
+  font-weight: 700; color: var(--testo-soft); text-align: center;
+  font-size: .95em;
+}
+.riga-eq .campo-eq {
+  font-family: var(--font-mono); font-size: 1.15em;
+  min-height: 52px; letter-spacing: .03em;
+}
+.riga-eq .azioni-riga { display: flex; gap: 4px; }
+.riga-eq .azioni-riga .btn { min-width: 44px; padding: 6px 8px; }
+.riga-eq .messaggio-riga { grid-column: 1 / -1; margin: 4px 0 0; font-size: .95em; }
+.riga-eq.esito-ok { border-left-color: var(--ok); background: var(--ok-chiaro); }
+.riga-eq.esito-errore { border-left-color: var(--attenzione); background: var(--attenzione-chiaro); }
+.riga-eq.esito-nonSo { border-left-color: var(--testo-soft); }
+@media (max-width: 520px) {
+  .riga-eq { grid-template-columns: 2em 1fr; }
+  .riga-eq .azioni-riga { grid-column: 2 / -1; justify-content: flex-end; }
+}
+
+/* Aiuti progressivi ------------------------------------------------- */
+.aiuti { display: grid; gap: 8px; }
+.aiuto-testo { border: 2px dashed var(--attenzione); background: var(--attenzione-chiaro); border-radius: var(--raggio-s); padding: 12px; }

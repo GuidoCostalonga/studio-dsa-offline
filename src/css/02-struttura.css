@@ -1,0 +1,72 @@
+/* ------------------------------------------------------------------
+   Struttura: barra superiore, contenuto, barra inferiore
+   ------------------------------------------------------------------ */
+
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 6px 10px; padding-top: calc(6px + env(safe-area-inset-top));
+  background: var(--primario); color: var(--su-primario);
+  box-shadow: var(--ombra);
+}
+.topbar button {
+  background: transparent; border: 2px solid transparent; color: inherit;
+  border-radius: var(--raggio-s); cursor: pointer;
+  min-height: var(--tocco); display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px; font-weight: 700;
+}
+.topbar button:hover { background: rgba(255,255,255,.14); }
+html[data-tema="contrasto"] .topbar button:hover { background: #222; }
+.topbar-home { font-size: 1.08em; }
+.topbar-title { white-space: nowrap; }
+.topbar-actions { display: flex; gap: 4px; }
+.topbar-btn span[aria-hidden] { font-size: 1.2em; }
+/* Su schermo stretto restano solo le icone: i pulsanti devono starci tutti */
+@media (max-width: 560px) {
+  .topbar-btn-label { display: none; }
+  .topbar button { padding: 4px 8px; }
+}
+
+.main {
+  max-width: var(--larghezza);
+  margin: 0 auto;
+  padding: var(--spazio);
+  padding-bottom: 96px;              /* spazio per la barra inferiore */
+  outline: none;
+}
+@media (min-width: 900px) { .main { padding-bottom: 32px; } }
+
+/* Barra inferiore, solo su schermi stretti ----------------------- */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; justify-content: space-around; gap: 2px;
+  background: var(--superficie); border-top: 2px solid var(--bordo);
+  padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+  box-shadow: 0 -2px 12px rgba(0,0,0,.08);
+}
+.tabbar button {
+  flex: 1 1 0; min-height: var(--tocco); min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: transparent; border: 2px solid transparent; border-radius: var(--raggio-s);
+  color: var(--testo-soft); cursor: pointer; padding: 4px 2px;
+  font-size: .72em; font-weight: 700; line-height: 1.1;
+}
+.tabbar button .ic { font-size: 1.5em; line-height: 1; }
+.tabbar button[aria-current="page"] { color: var(--primario); background: var(--primario-chiaro); }
+@media (min-width: 900px) { .tabbar { display: none; } .main { padding-bottom: 40px; } }
+
+/* Titolo di sezione --------------------------------------------- */
+.sezione-testa {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.sezione-testa h1 { margin: 0; display: flex; align-items: center; gap: 10px; }
+.sezione-testa .spinta { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.sezione-sub { color: var(--testo-soft); margin: -6px 0 16px; }
+
+/* Modalità senza distrazioni ------------------------------------ */
+html[data-focus="1"] .topbar,
+html[data-focus="1"] .tabbar,
+html[data-focus="1"] .nascondi-in-focus { display: none !important; }
+html[data-focus="1"] .main { padding-bottom: 24px; max-width: 760px; }
+html[data-focus="1"] { --corpo: 1.35rem; }

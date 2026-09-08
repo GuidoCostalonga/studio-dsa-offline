@@ -1,0 +1,63 @@
+/* ------------------------------------------------------------------
+   Lettore PDF e libreria personale
+   ------------------------------------------------------------------ */
+
+.pdf-barra {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  background: var(--superficie); border: 2px solid var(--bordo);
+  border-radius: var(--raggio); padding: 8px; margin-bottom: 12px;
+  position: sticky; top: calc(56px + env(safe-area-inset-top)); z-index: 30;
+}
+.pdf-barra .btn { padding: 8px 12px; min-height: 44px; }
+.pdf-pagina-campo { width: 4.4em; text-align: center; min-height: 44px; padding: 6px; }
+.pdf-conta { font-weight: 700; white-space: nowrap; }
+.pdf-sep { width: 1px; align-self: stretch; background: var(--bordo); margin: 0 2px; }
+
+.pdf-scena {
+  background: var(--superficie-2); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  padding: 10px; overflow: auto; max-height: 78vh; text-align: center;
+}
+.pdf-foglio { position: relative; display: inline-block; margin: 0 auto; box-shadow: var(--ombra); background: #fff; }
+.pdf-foglio canvas { display: block; }
+.pdf-testo {
+  position: absolute; inset: 0; overflow: hidden; opacity: .25; line-height: 1;
+  transform-origin: 0 0; color: transparent;
+}
+.pdf-testo span { position: absolute; white-space: pre; transform-origin: 0 0; cursor: text; color: transparent; }
+.pdf-testo ::selection { background: rgba(60, 130, 200, .45); }
+.pdf-evid { position: absolute; border-radius: 3px; pointer-events: none; mix-blend-mode: multiply; }
+
+.pdf-vuoto { padding: 40px 16px; text-align: center; color: var(--testo-soft); }
+
+/* Menu che appare dopo la selezione del testo ---------------------- */
+.menu-selezione {
+  position: fixed; z-index: 80; max-width: min(94vw, 460px);
+  background: var(--superficie); border: 2px solid var(--primario); border-radius: var(--raggio);
+  box-shadow: var(--ombra-forte); padding: 10px;
+}
+.menu-selezione .estratto {
+  font-size: .9em; color: var(--testo-soft); max-height: 4.6em; overflow: hidden;
+  margin-bottom: 8px; border-left: 4px solid var(--bordo); padding-left: 8px;
+}
+.menu-selezione .voci { display: flex; flex-wrap: wrap; gap: 6px; }
+.menu-selezione .voci .btn { min-height: 44px; padding: 6px 10px; font-size: .92em; }
+
+/* Libreria ---------------------------------------------------------- */
+.libro { display: flex; gap: 14px; align-items: center; }
+.libro .copertina {
+  flex: 0 0 auto; width: 54px; height: 70px; border-radius: 6px;
+  background: var(--primario-chiaro); border: 2px solid var(--primario);
+  display: flex; align-items: center; justify-content: center; font-size: 1.7em;
+}
+.avanzamento { height: 12px; border-radius: 999px; background: var(--superficie-2); border: 1px solid var(--bordo); overflow: hidden; margin-top: 6px; }
+.avanzamento .riempi { height: 100%; background: var(--ok); }
+
+/* Categorie di evidenziazione -------------------------------------- */
+.cat-scelta { display: flex; flex-wrap: wrap; gap: 8px; }
+.cat-scelta button { border: 2px solid var(--bordo); border-radius: 999px; padding: 8px 14px; min-height: 44px; cursor: pointer; background: var(--superficie); font-weight: 700; }
+.cat-scelta button[aria-pressed="true"] { outline: 3px solid var(--primario); outline-offset: 2px; }
+.pallino { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.3); vertical-align: -2px; margin-right: 6px; }
+
+/* Cronologia versioni ---------------------------------------------- */
+.versioni { display: grid; gap: 6px; }
+.versioni button { text-align: left; }

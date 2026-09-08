@@ -1,0 +1,139 @@
+/* ------------------------------------------------------------------
+   Lettura, righello, una frase / una parola alla volta, editor
+   ------------------------------------------------------------------ */
+
+/* Foglio di lettura: le variabili sono impostate da app.js --------- */
+.foglio {
+  --f-dim: 20px; --f-interlinea: 1.8; --f-lettere: 0.02em; --f-parole: 0.16em;
+  --f-larghezza: 42rem; --f-sfondo: var(--superficie); --f-testo: var(--testo);
+  background: var(--f-sfondo); color: var(--f-testo);
+  border: 2px solid var(--bordo); border-radius: var(--raggio);
+  padding: clamp(14px, 3vw, 30px);
+  position: relative;
+}
+.foglio-testo {
+  font-family: var(--font-lettura);
+  font-size: var(--f-dim);
+  line-height: var(--f-interlinea);
+  letter-spacing: var(--f-lettere);
+  word-spacing: var(--f-parole);
+  max-width: var(--f-larghezza);
+  margin: 0 auto;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  text-align: left;
+  hyphens: none;
+}
+.foglio-testo p { margin: 0 0 .9em; }
+.foglio-testo .frase { border-radius: 4px; padding: 0 1px; }
+.foglio-testo .frase.attiva { background: var(--evidenzia); color: #16242e; box-shadow: 0 0 0 2px var(--evidenzia); }
+html[data-tema="scura"] .foglio-testo .frase.attiva,
+html[data-tema="contrasto"] .foglio-testo .frase.attiva { color: #fff; }
+.foglio-testo mark.parola-letta { background: var(--primario); color: var(--su-primario); border-radius: 4px; }
+
+/* Spaziatura sillabica (solo visiva, non modifica le parole) ------- */
+.foglio-testo.sillabe { word-spacing: calc(var(--f-parole) + .5em); letter-spacing: calc(var(--f-lettere) + .06em); }
+.foglio-testo.righe-alterne .frase:nth-child(odd) { background: rgba(125, 125, 125, .10); }
+
+/* Righello di lettura --------------------------------------------- */
+.righello { position: fixed; inset: 0; z-index: 60; pointer-events: none; }
+.righello .velo {
+  position: absolute; left: 0; right: 0;
+  background: rgba(10, 18, 24, .55);
+  transition: height .05s linear, top .05s linear;
+}
+html[data-tema="contrasto"] .righello .velo { background: rgba(0, 0, 0, .86); }
+.righello .finestra {
+  position: absolute; left: 0; right: 0;
+  border-top: 3px solid var(--primario); border-bottom: 3px solid var(--primario);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.35) inset;
+}
+.righello-attivo { position: fixed; left: 50%; transform: translateX(-50%); bottom: 12px; z-index: 61;
+  pointer-events: auto; display: flex; gap: 8px; align-items: center;
+  background: var(--superficie); border: 2px solid var(--primario); border-radius: 999px;
+  padding: 6px 10px; box-shadow: var(--ombra-forte); }
+
+/* Una frase alla volta -------------------------------------------- */
+.frase-schermo {
+  min-height: 42vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 20px;
+  font-size: clamp(1.5rem, 5.5vw, 2.6rem); line-height: 1.45;
+  background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  overflow-wrap: break-word;
+}
+.frase-contatore { text-align: center; color: var(--testo-soft); margin: 10px 0; font-weight: 700; }
+
+/* Una parola alla volta (lettura focale) --------------------------- */
+.parola-schermo {
+  min-height: 38vh; display: flex; align-items: center; justify-content: center;
+  font-size: clamp(2rem, 12vw, 5rem); font-weight: 700; letter-spacing: .04em;
+  background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  overflow-wrap: break-word; text-align: center; padding: 12px;
+}
+
+/* Editor di scrittura --------------------------------------------- */
+.editor-area {
+  width: 100%; min-height: 46vh;
+  font-family: var(--font-lettura); font-size: var(--f-dim, 20px);
+  line-height: var(--f-interlinea, 1.8); letter-spacing: var(--f-lettere, .02em);
+  word-spacing: var(--f-parole, .16em);
+  background: var(--f-sfondo, var(--superficie)); color: var(--f-testo, var(--testo));
+  border: 2px solid var(--bordo); border-radius: var(--raggio); padding: 16px;
+  resize: vertical;
+}
+.contatori { display: flex; gap: 14px; flex-wrap: wrap; color: var(--testo-soft); font-weight: 700; }
+.contatori span b { color: var(--testo); }
+
+.controllo-risultato { display: grid; gap: 8px; }
+.controllo-riga { padding: 10px 12px; border-left: 6px solid var(--attenzione); background: var(--attenzione-chiaro); border-radius: 6px; }
+.controllo-riga.ok { border-left-color: var(--ok); background: var(--ok-chiaro); }
+.controllo-riga code { font-family: var(--font-mono); background: rgba(125,125,125,.18); padding: 0 4px; border-radius: 4px; }
+
+/* Schema di scrittura guidata ------------------------------------- */
+.guida-passo { border-left: 6px solid var(--primario); padding-left: 12px; margin-bottom: 14px; }
+.guida-passo .domanda { font-weight: 700; margin-bottom: 6px; }
+
+/* Timer ------------------------------------------------------------ */
+.timer-grande {
+  font-size: clamp(3.4rem, 18vw, 7rem); font-weight: 700; text-align: center;
+  font-variant-numeric: tabular-nums; letter-spacing: .02em; line-height: 1.05; margin: 10px 0;
+}
+.timer-cosa { text-align: center; font-size: 1.25em; font-weight: 700; }
+.timer-stato { text-align: center; color: var(--testo-soft); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+
+/* Flashcard -------------------------------------------------------- */
+.flash {
+  min-height: 34vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 22px; cursor: pointer;
+  font-size: clamp(1.2rem, 4.5vw, 1.9rem); line-height: 1.4;
+  background: var(--superficie); border: 3px solid var(--primario); border-radius: var(--raggio);
+  overflow-wrap: break-word;
+}
+.flash.retro { background: var(--primario-chiaro); }
+.flash-lato { position: absolute; top: 10px; left: 14px; font-size: .8rem; color: var(--testo-soft); font-weight: 700; letter-spacing: .1em; }
+.flash-wrap { position: relative; }
+
+/* Mappa concettuale ------------------------------------------------ */
+.mappa-tela {
+  position: relative; width: 100%; height: min(70vh, 560px);
+  background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  overflow: hidden; touch-action: none;
+}
+.mappa-tela svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nodo {
+  position: absolute; transform: translate(-50%, -50%);
+  padding: 10px 14px; max-width: 230px;
+  background: var(--primario-chiaro); color: var(--testo);
+  border: 3px solid var(--primario); border-radius: 12px;
+  font-weight: 700; text-align: center; cursor: grab; user-select: none;
+  box-shadow: var(--ombra); word-break: break-word;
+}
+.nodo img {
+  display: block; width: 7em; max-width: 100%; height: auto;
+  border-radius: 8px; margin: 0 auto 6px;
+  border: 2px solid rgba(0, 0, 0, .18); background: #fff;
+  pointer-events: none;                 /* così si continua a trascinare il nodo */
+}
+.nodo.centrale { background: var(--primario); color: var(--su-primario); font-size: 1.12em; }
+.nodo.scelto { outline: 4px dashed var(--attenzione); outline-offset: 3px; }
+.mappa-aiuto { color: var(--testo-soft); font-size: .92em; }

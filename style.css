@@ -1,0 +1,908 @@
+/* ============================================================
+   01-base.css
+   ============================================================ */
+/* ------------------------------------------------------------------
+   STUDIO DSA OFFLINE — base, temi, tipografia
+   Nessun font e nessuna risorsa da Internet: solo font di sistema.
+   ------------------------------------------------------------------ */
+
+/* Reset leggero -------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+/* IMPORTANTE: "hidden" deve vincere sempre.
+   Senza questa riga, una regola come ".modale { display: flex }" batte la
+   regola del browser "[hidden] { display: none }": il pannello resta sullo
+   schermo, invisibile ma sopra a tutto, e si mangia ogni tocco.
+   (Bug trovato dopo la consegna: dopo l'onboarding non si poteva più
+   toccare niente.) */
+[hidden] { display: none !important; }
+img, svg, canvas { max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* Variabili di tema ---------------------------------------------- */
+:root {
+  /* colori (tema chiaro di partenza) */
+  --sfondo:        #eef2f6;
+  --superficie:    #ffffff;
+  --superficie-2:  #f4f7fa;
+  --testo:         #16242e;
+  --testo-soft:    #4d616f;
+  --bordo:         #c9d6e0;
+  --primario:      #1d4e6f;
+  --primario-chiaro:#e3eef6;
+  --su-primario:   #ffffff;
+  --ok:            #1f6b45;
+  --ok-chiaro:     #e2f3e9;
+  --attenzione:    #8a5a00;
+  --attenzione-chiaro:#fdf1d8;
+  --errore:        #99311f;
+  --errore-chiaro: #fbe6e2;
+  --evidenzia:     #ffe98a;
+  --ombra:         0 1px 2px rgba(14, 34, 48, .10), 0 4px 14px rgba(14, 34, 48, .07);
+  --ombra-forte:   0 8px 34px rgba(14, 34, 48, .22);
+
+  /* misure */
+  --raggio:        16px;
+  --raggio-s:      10px;
+  --tocco:         48px;          /* area minima toccabile (> 44px) */
+  --spazio:        16px;
+  --larghezza:     1100px;
+
+  /* tipografia regolabile dall'utente */
+  --corpo:         1.05rem;       /* dimensione testo interfaccia */
+  --font-ui:       system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-lettura:  var(--font-ui);
+  --font-mono:     ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Roboto Mono", monospace;
+}
+
+/* Temi ------------------------------------------------------------ */
+html[data-tema="crema"] {
+  --sfondo: #f2e9d8; --superficie: #fbf4e6; --superficie-2: #f5ecdb;
+  --testo: #2c2417; --testo-soft: #5d5140; --bordo: #d9c9ab;
+  --primario: #7a4a1c; --primario-chiaro: #f0e0c8; --evidenzia: #ffe08a;
+}
+html[data-tema="giallo"] {
+  --sfondo: #f6efc6; --superficie: #fdfae0; --superficie-2: #f8f2cf;
+  --testo: #2a2712; --testo-soft: #57512c; --bordo: #ddd39a;
+  --primario: #6b5a10; --primario-chiaro: #f2ebbe; --evidenzia: #ffd35c;
+}
+html[data-tema="grigio"] {
+  --sfondo: #dfe3e6; --superficie: #eff2f4; --superficie-2: #e6eaed;
+  --testo: #1e2528; --testo-soft: #4e585d; --bordo: #bcc4c9;
+  --primario: #33505e; --primario-chiaro: #dde6ea;
+}
+html[data-tema="scura"] {
+  --sfondo: #12181d; --superficie: #1c242b; --superficie-2: #232d35;
+  --testo: #e8eef3; --testo-soft: #a9bac6; --bordo: #37454f;
+  --primario: #7cc0e8; --primario-chiaro: #223642; --su-primario: #08131a;
+  --ok: #7ddba6; --ok-chiaro: #163023; --attenzione: #f0c565; --attenzione-chiaro: #33280f;
+  --errore: #f2a294; --errore-chiaro: #38201c; --evidenzia: #6d5c14;
+  --ombra: 0 1px 2px rgba(0,0,0,.5), 0 4px 14px rgba(0,0,0,.35);
+  --ombra-forte: 0 8px 34px rgba(0,0,0,.6);
+}
+html[data-tema="contrasto"] {
+  --sfondo: #000000; --superficie: #000000; --superficie-2: #101010;
+  --testo: #ffffff; --testo-soft: #f2f2f2; --bordo: #ffffff;
+  --primario: #ffee00; --primario-chiaro: #232300; --su-primario: #000000;
+  --ok: #6cff9b; --ok-chiaro: #002d12; --attenzione: #ffcf3d; --attenzione-chiaro: #2a2100;
+  --errore: #ff9a86; --errore-chiaro: #2f0d06; --evidenzia: #ffee00;
+  --ombra: none; --ombra-forte: 0 0 0 3px #ffffff;
+}
+html[data-tema="contrasto"] .card,
+html[data-tema="contrasto"] .btn,
+html[data-tema="contrasto"] .campo { border-width: 2px; }
+
+/* Font alternativi selezionabili (tutti presenti nei sistemi operativi) */
+html[data-font="verdana"]  { --font-ui: Verdana, Geneva, sans-serif; }
+html[data-font="tahoma"]   { --font-ui: Tahoma, Verdana, sans-serif; }
+html[data-font="georgia"]  { --font-ui: Georgia, "Times New Roman", serif; }
+html[data-font="mono"]     { --font-ui: var(--font-mono); }
+
+/* Scala del testo dell'interfaccia */
+html[data-testo="1"] { --corpo: 0.95rem; }
+html[data-testo="2"] { --corpo: 1.05rem; }
+html[data-testo="3"] { --corpo: 1.2rem;  }
+html[data-testo="4"] { --corpo: 1.38rem; }
+html[data-testo="5"] { --corpo: 1.6rem;  }
+
+body {
+  background: var(--sfondo);
+  color: var(--testo);
+  font-family: var(--font-ui);
+  font-size: var(--corpo);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .4em; font-weight: 700; }
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.3em; }
+h3 { font-size: 1.12em; }
+p  { margin: 0 0 .8em; }
+a  { color: var(--primario); }
+
+/* Meno movimento se il sistema lo richiede */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+/* Focus sempre ben visibile ------------------------------------- */
+:focus-visible {
+  outline: 3px solid var(--primario);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+html[data-tema="contrasto"] :focus-visible { outline-color: #ffee00; outline-width: 4px; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--primario); color: var(--su-primario);
+  padding: 12px 18px; border-radius: 0 0 var(--raggio-s) 0; font-weight: 700;
+}
+.skip-link:focus { left: 0; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+
+/* ============================================================
+   02-struttura.css
+   ============================================================ */
+/* ------------------------------------------------------------------
+   Struttura: barra superiore, contenuto, barra inferiore
+   ------------------------------------------------------------------ */
+
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 6px 10px; padding-top: calc(6px + env(safe-area-inset-top));
+  background: var(--primario); color: var(--su-primario);
+  box-shadow: var(--ombra);
+}
+.topbar button {
+  background: transparent; border: 2px solid transparent; color: inherit;
+  border-radius: var(--raggio-s); cursor: pointer;
+  min-height: var(--tocco); display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px; font-weight: 700;
+}
+.topbar button:hover { background: rgba(255,255,255,.14); }
+html[data-tema="contrasto"] .topbar button:hover { background: #222; }
+.topbar-home { font-size: 1.08em; }
+.topbar-title { white-space: nowrap; }
+.topbar-actions { display: flex; gap: 4px; }
+.topbar-btn span[aria-hidden] { font-size: 1.2em; }
+/* Su schermo stretto restano solo le icone: i pulsanti devono starci tutti */
+@media (max-width: 560px) {
+  .topbar-btn-label { display: none; }
+  .topbar button { padding: 4px 8px; }
+}
+
+.main {
+  max-width: var(--larghezza);
+  margin: 0 auto;
+  padding: var(--spazio);
+  padding-bottom: 96px;              /* spazio per la barra inferiore */
+  outline: none;
+}
+@media (min-width: 900px) { .main { padding-bottom: 32px; } }
+
+/* Barra inferiore, solo su schermi stretti ----------------------- */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; justify-content: space-around; gap: 2px;
+  background: var(--superficie); border-top: 2px solid var(--bordo);
+  padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+  box-shadow: 0 -2px 12px rgba(0,0,0,.08);
+}
+.tabbar button {
+  flex: 1 1 0; min-height: var(--tocco); min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: transparent; border: 2px solid transparent; border-radius: var(--raggio-s);
+  color: var(--testo-soft); cursor: pointer; padding: 4px 2px;
+  font-size: .72em; font-weight: 700; line-height: 1.1;
+}
+.tabbar button .ic { font-size: 1.5em; line-height: 1; }
+.tabbar button[aria-current="page"] { color: var(--primario); background: var(--primario-chiaro); }
+@media (min-width: 900px) { .tabbar { display: none; } .main { padding-bottom: 40px; } }
+
+/* Titolo di sezione --------------------------------------------- */
+.sezione-testa {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.sezione-testa h1 { margin: 0; display: flex; align-items: center; gap: 10px; }
+.sezione-testa .spinta { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.sezione-sub { color: var(--testo-soft); margin: -6px 0 16px; }
+
+/* Modalità senza distrazioni ------------------------------------ */
+html[data-focus="1"] .topbar,
+html[data-focus="1"] .tabbar,
+html[data-focus="1"] .nascondi-in-focus { display: none !important; }
+html[data-focus="1"] .main { padding-bottom: 24px; max-width: 760px; }
+html[data-focus="1"] { --corpo: 1.35rem; }
+
+
+/* ============================================================
+   03-componenti.css
+   ============================================================ */
+/* ------------------------------------------------------------------
+   Componenti riutilizzabili: pulsanti, schede, campi, elenchi, avvisi
+   ------------------------------------------------------------------ */
+
+/* Pulsanti -------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: var(--tocco); padding: 10px 18px;
+  background: var(--superficie); color: var(--testo);
+  border: 2px solid var(--bordo); border-radius: var(--raggio-s);
+  font-weight: 700; cursor: pointer; text-align: center;
+  transition: background .12s ease, transform .06s ease;
+}
+.btn:hover { background: var(--superficie-2); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.btn-primario { background: var(--primario); color: var(--su-primario); border-color: var(--primario); }
+.btn-primario:hover { filter: brightness(1.08); background: var(--primario); }
+.btn-ok { background: var(--ok-chiaro); border-color: var(--ok); color: var(--ok); }
+.btn-attenzione { background: var(--attenzione-chiaro); border-color: var(--attenzione); color: var(--attenzione); }
+.btn-errore { background: var(--errore-chiaro); border-color: var(--errore); color: var(--errore); }
+.btn-grande { font-size: 1.15em; padding: 14px 22px; min-height: 58px; }
+.btn-piccolo { min-height: 40px; padding: 6px 12px; font-size: .92em; }
+.btn-largo { width: 100%; }
+.btn[aria-pressed="true"] { background: var(--primario-chiaro); border-color: var(--primario); color: var(--primario); }
+
+.barra-btn { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.barra-btn.centro { justify-content: center; }
+
+/* Schede ---------------------------------------------------------- */
+.card {
+  background: var(--superficie);
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio);
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--ombra);
+}
+.card > :last-child { margin-bottom: 0; }
+.card-titolo { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.card-titolo h2, .card-titolo h3 { margin: 0; }
+.card-soft { background: var(--superficie-2); box-shadow: none; }
+
+/* Griglia della home ---------------------------------------------- */
+.griglia-home {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+}
+.tessera {
+  display: flex; align-items: flex-start; gap: 14px; text-align: left;
+  min-height: 96px; padding: 16px;
+  background: var(--superficie); color: var(--testo);
+  border: 2px solid var(--bordo); border-radius: var(--raggio);
+  cursor: pointer; box-shadow: var(--ombra);
+}
+.tessera:hover { border-color: var(--primario); background: var(--superficie-2); }
+.tessera .ic { font-size: 2.1em; line-height: 1; flex: 0 0 auto; }
+.tessera .tx b { display: block; font-size: 1.08em; }
+.tessera .tx span { color: var(--testo-soft); font-size: .92em; }
+
+/* Campi ----------------------------------------------------------- */
+.campo, .area {
+  width: 100%; padding: 12px 14px; min-height: var(--tocco);
+  background: var(--superficie); color: var(--testo);
+  border: 2px solid var(--bordo); border-radius: var(--raggio-s);
+}
+.area { min-height: 140px; line-height: 1.65; resize: vertical; }
+.etichetta { display: block; font-weight: 700; margin: 12px 0 6px; }
+.etichetta:first-child { margin-top: 0; }
+.aiutino { color: var(--testo-soft); font-size: .9em; margin: 4px 0 0; }
+.riga-campi { display: flex; gap: 10px; flex-wrap: wrap; }
+.riga-campi > * { flex: 1 1 180px; min-width: 0; }
+
+.check {
+  display: flex; align-items: flex-start; gap: 10px;
+  min-height: var(--tocco); padding: 6px 0; cursor: pointer;
+}
+.check input { width: 26px; height: 26px; margin-top: 2px; flex: 0 0 auto; accent-color: var(--primario); }
+
+/* Cursori (slider) ------------------------------------------------ */
+.slider-riga { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; margin-bottom: 10px; }
+.slider-riga label { font-weight: 700; }
+.slider-riga output { font-variant-numeric: tabular-nums; color: var(--testo-soft); }
+.slider-riga input[type="range"] { grid-column: 1 / -1; width: 100%; height: 36px; accent-color: var(--primario); }
+
+/* Elenchi --------------------------------------------------------- */
+.lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.voce {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px; background: var(--superficie); border: 2px solid var(--bordo);
+  border-radius: var(--raggio-s);
+}
+.voce .corpo { flex: 1 1 auto; min-width: 0; }
+.voce .corpo b { display: block; }
+.voce .corpo .meta { color: var(--testo-soft); font-size: .88em; }
+.voce .azioni { display: flex; gap: 6px; flex-wrap: wrap; }
+.voce.fatto { opacity: .62; }
+.voce.fatto .corpo b { text-decoration: line-through; }
+
+/* Etichette colorate ---------------------------------------------- */
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 2px 10px; border-radius: 999px; font-size: .85em; font-weight: 700;
+  background: var(--primario-chiaro); color: var(--primario); border: 1px solid var(--bordo);
+}
+.tag-ok { background: var(--ok-chiaro); color: var(--ok); }
+.tag-att { background: var(--attenzione-chiaro); color: var(--attenzione); }
+.tag-err { background: var(--errore-chiaro); color: var(--errore); }
+
+/* Avvisi ---------------------------------------------------------- */
+.avviso {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 14px; border-radius: var(--raggio-s);
+  border: 2px solid var(--bordo); background: var(--superficie-2);
+  margin-bottom: 12px;
+}
+.avviso .ic { font-size: 1.3em; line-height: 1.2; }
+.avviso-ok { background: var(--ok-chiaro); border-color: var(--ok); }
+.avviso-att { background: var(--attenzione-chiaro); border-color: var(--attenzione); }
+.avviso-err { background: var(--errore-chiaro); border-color: var(--errore); }
+.avviso p { margin: 0; }
+
+.vuoto { text-align: center; color: var(--testo-soft); padding: 28px 12px; }
+.vuoto .ic { font-size: 2.6em; display: block; margin-bottom: 6px; }
+
+/* Messaggio "salvato" --------------------------------------------- */
+.salvato { color: var(--ok); font-weight: 700; font-size: .9em; opacity: 0; transition: opacity .3s ease; }
+.salvato.mostra { opacity: 1; }
+
+/* Toast ----------------------------------------------------------- */
+.toast {
+  position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px);
+  z-index: 90; max-width: min(92vw, 480px);
+  background: var(--superficie); color: var(--testo);
+  border: 2px solid var(--primario); border-radius: var(--raggio);
+  padding: 12px 18px; box-shadow: var(--ombra-forte);
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease;
+  font-weight: 700; text-align: center;
+}
+.toast.mostra { opacity: 1; transform: translate(-50%, 0); }
+@media (min-width: 900px) { .toast { bottom: 28px; } }
+
+/* Finestra modale ------------------------------------------------- */
+.modale {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(8, 20, 28, .6); padding: 12px;
+}
+.modale-box {
+  background: var(--superficie); color: var(--testo);
+  border: 2px solid var(--bordo); border-radius: var(--raggio);
+  box-shadow: var(--ombra-forte);
+  width: min(96vw, 640px); max-height: 88vh; overflow: auto; padding: 20px;
+}
+.modale-box h2 { margin-top: 0; }
+.modale-azioni { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; margin-top: 18px; }
+
+/* Pannello a fisarmonica ------------------------------------------ */
+details.pannello {
+  border: 2px solid var(--bordo); border-radius: var(--raggio-s);
+  background: var(--superficie); margin-bottom: 12px;
+}
+details.pannello > summary {
+  cursor: pointer; padding: 12px 14px; min-height: var(--tocco);
+  display: flex; align-items: center; gap: 10px; font-weight: 700;
+  list-style: none;
+}
+details.pannello > summary::-webkit-details-marker { display: none; }
+details.pannello > summary::after { content: "▾"; margin-left: auto; }
+details.pannello[open] > summary::after { content: "▴"; }
+details.pannello > .contenuto { padding: 0 14px 14px; }
+
+/* Tabelle --------------------------------------------------------- */
+.tabella-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.tab { border-collapse: collapse; width: 100%; }
+table.tab th, table.tab td { border: 1px solid var(--bordo); padding: 8px 10px; text-align: left; }
+table.tab th { background: var(--superficie-2); }
+
+
+/* ============================================================
+   04-lettura.css
+   ============================================================ */
+/* ------------------------------------------------------------------
+   Lettura, righello, una frase / una parola alla volta, editor
+   ------------------------------------------------------------------ */
+
+/* Foglio di lettura: le variabili sono impostate da app.js --------- */
+.foglio {
+  --f-dim: 20px; --f-interlinea: 1.8; --f-lettere: 0.02em; --f-parole: 0.16em;
+  --f-larghezza: 42rem; --f-sfondo: var(--superficie); --f-testo: var(--testo);
+  background: var(--f-sfondo); color: var(--f-testo);
+  border: 2px solid var(--bordo); border-radius: var(--raggio);
+  padding: clamp(14px, 3vw, 30px);
+  position: relative;
+}
+.foglio-testo {
+  font-family: var(--font-lettura);
+  font-size: var(--f-dim);
+  line-height: var(--f-interlinea);
+  letter-spacing: var(--f-lettere);
+  word-spacing: var(--f-parole);
+  max-width: var(--f-larghezza);
+  margin: 0 auto;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  text-align: left;
+  hyphens: none;
+}
+.foglio-testo p { margin: 0 0 .9em; }
+.foglio-testo .frase { border-radius: 4px; padding: 0 1px; }
+.foglio-testo .frase.attiva { background: var(--evidenzia); color: #16242e; box-shadow: 0 0 0 2px var(--evidenzia); }
+html[data-tema="scura"] .foglio-testo .frase.attiva,
+html[data-tema="contrasto"] .foglio-testo .frase.attiva { color: #fff; }
+.foglio-testo mark.parola-letta { background: var(--primario); color: var(--su-primario); border-radius: 4px; }
+
+/* Spaziatura sillabica (solo visiva, non modifica le parole) ------- */
+.foglio-testo.sillabe { word-spacing: calc(var(--f-parole) + .5em); letter-spacing: calc(var(--f-lettere) + .06em); }
+.foglio-testo.righe-alterne .frase:nth-child(odd) { background: rgba(125, 125, 125, .10); }
+
+/* Righello di lettura --------------------------------------------- */
+.righello { position: fixed; inset: 0; z-index: 60; pointer-events: none; }
+.righello .velo {
+  position: absolute; left: 0; right: 0;
+  background: rgba(10, 18, 24, .55);
+  transition: height .05s linear, top .05s linear;
+}
+html[data-tema="contrasto"] .righello .velo { background: rgba(0, 0, 0, .86); }
+.righello .finestra {
+  position: absolute; left: 0; right: 0;
+  border-top: 3px solid var(--primario); border-bottom: 3px solid var(--primario);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.35) inset;
+}
+.righello-attivo { position: fixed; left: 50%; transform: translateX(-50%); bottom: 12px; z-index: 61;
+  pointer-events: auto; display: flex; gap: 8px; align-items: center;
+  background: var(--superficie); border: 2px solid var(--primario); border-radius: 999px;
+  padding: 6px 10px; box-shadow: var(--ombra-forte); }
+
+/* Una frase alla volta -------------------------------------------- */
+.frase-schermo {
+  min-height: 42vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 20px;
+  font-size: clamp(1.5rem, 5.5vw, 2.6rem); line-height: 1.45;
+  background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  overflow-wrap: break-word;
+}
+.frase-contatore { text-align: center; color: var(--testo-soft); margin: 10px 0; font-weight: 700; }
+
+/* Una parola alla volta (lettura focale) --------------------------- */
+.parola-schermo {
+  min-height: 38vh; display: flex; align-items: center; justify-content: center;
+  font-size: clamp(2rem, 12vw, 5rem); font-weight: 700; letter-spacing: .04em;
+  background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  overflow-wrap: break-word; text-align: center; padding: 12px;
+}
+
+/* Editor di scrittura --------------------------------------------- */
+.editor-area {
+  width: 100%; min-height: 46vh;
+  font-family: var(--font-lettura); font-size: var(--f-dim, 20px);
+  line-height: var(--f-interlinea, 1.8); letter-spacing: var(--f-lettere, .02em);
+  word-spacing: var(--f-parole, .16em);
+  background: var(--f-sfondo, var(--superficie)); color: var(--f-testo, var(--testo));
+  border: 2px solid var(--bordo); border-radius: var(--raggio); padding: 16px;
+  resize: vertical;
+}
+.contatori { display: flex; gap: 14px; flex-wrap: wrap; color: var(--testo-soft); font-weight: 700; }
+.contatori span b { color: var(--testo); }
+
+.controllo-risultato { display: grid; gap: 8px; }
+.controllo-riga { padding: 10px 12px; border-left: 6px solid var(--attenzione); background: var(--attenzione-chiaro); border-radius: 6px; }
+.controllo-riga.ok { border-left-color: var(--ok); background: var(--ok-chiaro); }
+.controllo-riga code { font-family: var(--font-mono); background: rgba(125,125,125,.18); padding: 0 4px; border-radius: 4px; }
+
+/* Schema di scrittura guidata ------------------------------------- */
+.guida-passo { border-left: 6px solid var(--primario); padding-left: 12px; margin-bottom: 14px; }
+.guida-passo .domanda { font-weight: 700; margin-bottom: 6px; }
+
+/* Timer ------------------------------------------------------------ */
+.timer-grande {
+  font-size: clamp(3.4rem, 18vw, 7rem); font-weight: 700; text-align: center;
+  font-variant-numeric: tabular-nums; letter-spacing: .02em; line-height: 1.05; margin: 10px 0;
+}
+.timer-cosa { text-align: center; font-size: 1.25em; font-weight: 700; }
+.timer-stato { text-align: center; color: var(--testo-soft); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+
+/* Flashcard -------------------------------------------------------- */
+.flash {
+  min-height: 34vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 22px; cursor: pointer;
+  font-size: clamp(1.2rem, 4.5vw, 1.9rem); line-height: 1.4;
+  background: var(--superficie); border: 3px solid var(--primario); border-radius: var(--raggio);
+  overflow-wrap: break-word;
+}
+.flash.retro { background: var(--primario-chiaro); }
+.flash-lato { position: absolute; top: 10px; left: 14px; font-size: .8rem; color: var(--testo-soft); font-weight: 700; letter-spacing: .1em; }
+.flash-wrap { position: relative; }
+
+/* Mappa concettuale ------------------------------------------------ */
+.mappa-tela {
+  position: relative; width: 100%; height: min(70vh, 560px);
+  background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  overflow: hidden; touch-action: none;
+}
+.mappa-tela svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nodo {
+  position: absolute; transform: translate(-50%, -50%);
+  padding: 10px 14px; max-width: 230px;
+  background: var(--primario-chiaro); color: var(--testo);
+  border: 3px solid var(--primario); border-radius: 12px;
+  font-weight: 700; text-align: center; cursor: grab; user-select: none;
+  box-shadow: var(--ombra); word-break: break-word;
+}
+.nodo img {
+  display: block; width: 7em; max-width: 100%; height: auto;
+  border-radius: 8px; margin: 0 auto 6px;
+  border: 2px solid rgba(0, 0, 0, .18); background: #fff;
+  pointer-events: none;                 /* così si continua a trascinare il nodo */
+}
+.nodo.centrale { background: var(--primario); color: var(--su-primario); font-size: 1.12em; }
+.nodo.scelto { outline: 4px dashed var(--attenzione); outline-offset: 3px; }
+.mappa-aiuto { color: var(--testo-soft); font-size: .92em; }
+
+
+/* ============================================================
+   05-matematica.css
+   ============================================================ */
+/* ------------------------------------------------------------------
+   Matematica: formule, calcolatrice, colonna, tabelline, passaggi
+   ------------------------------------------------------------------ */
+
+/* Formule scritte in modo "come sul quaderno" ---------------------- */
+.mate {
+  font-family: var(--font-lettura);
+  font-size: 1.45em; line-height: 1.9; letter-spacing: .02em;
+  display: inline-flex; align-items: center; flex-wrap: wrap; gap: .12em;
+  overflow-wrap: break-word;
+}
+.mate-blocco { display: block; text-align: center; padding: 10px 4px; overflow-x: auto; }
+.mate .frazione {
+  display: inline-flex; flex-direction: column; align-items: center;
+  vertical-align: middle; margin: 0 .18em; line-height: 1.15;
+}
+.mate .frazione .sopra { padding: 0 .32em; border-bottom: 2px solid currentColor; }
+.mate .frazione .sotto { padding: 0 .32em; }
+.mate sup { font-size: .68em; vertical-align: super; line-height: 0; }
+.mate .radice { display: inline-flex; align-items: stretch; margin: 0 .1em; }
+.mate .radice .segno { font-size: 1.1em; }
+.mate .radice .dentro { border-top: 2px solid currentColor; padding: 0 .22em; margin-top: .12em; }
+.mate .operatore { margin: 0 .22em; }
+/* Il segno = sta dentro la riga, non da solo su una riga sua:
+   un'equazione si legge tutta insieme. */
+.mate .uguale { margin: 0 .55em; font-weight: 700; }
+.mate mark {
+  background: var(--evidenzia); color: #16242e; border-radius: 5px;
+  padding: 0 .18em; box-shadow: 0 0 0 2px var(--evidenzia);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+html[data-tema="scura"] .mate mark, html[data-tema="contrasto"] .mate mark { color: #fff; }
+
+/* Passaggi guidati ------------------------------------------------- */
+.passo {
+  border: 2px solid var(--bordo); border-left: 8px solid var(--primario);
+  border-radius: var(--raggio-s); background: var(--superficie);
+  padding: 12px 14px; margin-bottom: 12px;
+}
+.passo .numero { font-weight: 700; color: var(--primario); letter-spacing: .06em; text-transform: uppercase; font-size: .86em; }
+.passo .spiega { color: var(--testo-soft); margin-top: 6px; }
+.passo.controllo { border-left-color: var(--ok); background: var(--ok-chiaro); }
+.passo-solo { border-left-width: 12px; }
+.passo-nav { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+
+.cosa-faccio { display: grid; gap: 8px; }
+.cosa-faccio .riga {
+  display: grid; grid-template-columns: 1fr; gap: 4px;
+  border: 2px solid var(--bordo); border-radius: var(--raggio-s); padding: 10px 12px;
+  background: var(--superficie);
+}
+@media (min-width: 700px) { .cosa-faccio .riga { grid-template-columns: 1.2fr 1fr; align-items: center; gap: 14px; } }
+.cosa-faccio .riga .nota { color: var(--testo-soft); }
+
+/* Semaforo di affidabilità ---------------------------------------- */
+.semaforo { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 2px solid var(--bordo); }
+.semaforo.verde { background: var(--ok-chiaro); color: var(--ok); border-color: var(--ok); }
+.semaforo.giallo { background: var(--attenzione-chiaro); color: var(--attenzione); border-color: var(--attenzione); }
+.semaforo.rosso { background: var(--errore-chiaro); color: var(--errore); border-color: var(--errore); }
+
+/* Calcolatrice ----------------------------------------------------- */
+.calc-display {
+  background: var(--superficie-2); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  padding: 12px 14px; margin-bottom: 12px; text-align: right; overflow-x: auto;
+}
+.calc-display .espressione { font-family: var(--font-mono); font-size: 1.25em; min-height: 1.6em; word-break: break-all; }
+.calc-display .risultato { font-size: 2em; font-weight: 700; min-height: 1.3em; }
+.calc-tasti { display: grid; gap: 8px; grid-template-columns: repeat(4, 1fr); }
+.calc-tasti.scientifica { grid-template-columns: repeat(4, 1fr); }
+@media (min-width: 620px) { .calc-tasti.scientifica { grid-template-columns: repeat(6, 1fr); } }
+.calc-tasti button {
+  min-height: 56px; font-size: 1.15em; font-weight: 700;
+  border: 2px solid var(--bordo); border-radius: var(--raggio-s);
+  background: var(--superficie); color: var(--testo); cursor: pointer;
+}
+.calc-tasti button:hover { background: var(--superficie-2); }
+.calc-tasti button.op { background: var(--primario-chiaro); color: var(--primario); }
+.calc-tasti button.uguale { background: var(--primario); color: var(--su-primario); border-color: var(--primario); }
+.calc-tasti button.canc { background: var(--errore-chiaro); color: var(--errore); }
+.calc-tasti button.fn { font-size: .98em; }
+
+/* Tastiera dei simboli matematici --------------------------------- */
+.tastiera-mate { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.tastiera-mate button {
+  min-width: 46px; min-height: 46px; padding: 4px 10px;
+  border: 2px solid var(--bordo); border-radius: 10px; background: var(--superficie);
+  font-weight: 700; cursor: pointer;
+}
+.tastiera-mate button:hover { background: var(--primario-chiaro); }
+
+/* Operazioni in colonna -------------------------------------------- */
+.colonna-griglia { display: inline-block; font-family: var(--font-mono); font-size: clamp(1.3rem, 6vw, 2rem); }
+.colonna-riga { display: flex; justify-content: flex-end; }
+.colonna-cella {
+  width: 1.7em; height: 1.9em; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--bordo); background: var(--superficie);
+}
+.colonna-cella.riporto { height: 1.3em; font-size: .62em; color: var(--errore); background: var(--errore-chiaro); }
+.colonna-cella.segno { border: none; background: transparent; font-weight: 700; }
+.colonna-riga.linea .colonna-cella { border-top: 4px solid var(--testo); }
+.colonna-intestazioni .colonna-cella { border: none; font-size: .5em; color: var(--testo-soft); height: auto; text-align: center; line-height: 1.2; }
+.colonna-cella input {
+  width: 100%; height: 100%; border: none; background: transparent; text-align: center;
+  font: inherit; padding: 0; -moz-appearance: textfield;
+}
+.colonna-cella input::-webkit-outer-spin-button,
+.colonna-cella input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.colonna-cella:focus-within { background: var(--primario-chiaro); outline: 3px solid var(--primario); }
+
+/* Tavola pitagorica ------------------------------------------------ */
+.pitagorica { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+/* Celle in pixel, non in em: un dito ha sempre bisogno della stessa area,
+   anche quando il testo è piccolo. Se non ci stanno, la tabella scorre in
+   orizzontale (sta dentro .tabella-scroll) invece di rimpicciolire i tasti. */
+.pitagorica td, .pitagorica th {
+  border: 1px solid var(--bordo);
+  min-width: 40px; height: 44px; text-align: center; padding: 0;
+  font-size: clamp(.9rem, 2.6vw, 1.05rem);
+}
+.pitagorica th { background: var(--superficie-2); font-weight: 700; }
+.pitagorica td button { width: 100%; height: 100%; min-height: 44px; border: none; background: var(--superficie); cursor: pointer; font: inherit; }
+.pitagorica td.evid button { background: var(--primario-chiaro); }
+.pitagorica td.scelto button { background: var(--primario); color: var(--su-primario); font-weight: 700; }
+.pitagorica.nascondi td button { color: transparent; }
+.pitagorica.nascondi td.svelato button { color: inherit; }
+
+/* Frazioni disegnate ------------------------------------------------ */
+.torta { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; justify-content: center; }
+.barra-frazione { display: flex; width: min(100%, 420px); height: 54px; border: 2px solid var(--testo); border-radius: 8px; overflow: hidden; }
+.barra-frazione .fetta { flex: 1 1 0; border-right: 1px solid var(--testo); }
+.barra-frazione .fetta:last-child { border-right: none; }
+.barra-frazione .fetta.piena { background: var(--primario); }
+
+/* Retta dei numeri / grafici --------------------------------------- */
+.tela-wrap { overflow-x: auto; background: var(--superficie); border: 2px solid var(--bordo); border-radius: var(--raggio); padding: 8px; }
+canvas.tela { display: block; width: 100%; height: auto; touch-action: none; background: var(--superficie); border-radius: 8px; }
+
+/* Percentuali ------------------------------------------------------- */
+.perc-barra { height: 40px; border: 2px solid var(--testo); border-radius: 8px; overflow: hidden; background: var(--superficie-2); }
+.perc-barra .riempi { height: 100%; background: var(--primario); }
+.perc-blocchi { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.perc-blocchi .blocco { border: 2px solid var(--bordo); border-radius: var(--raggio-s); padding: 10px; text-align: center; background: var(--superficie); }
+.perc-blocchi .blocco .et { font-size: .8em; text-transform: uppercase; letter-spacing: .08em; color: var(--testo-soft); font-weight: 700; }
+.perc-blocchi .blocco .val { font-size: 1.5em; font-weight: 700; }
+
+/* "Lo risolvo io": il quaderno dei passaggi ------------------------- */
+.riga-eq {
+  display: grid;
+  grid-template-columns: 2.2em 1fr auto;
+  gap: 8px; align-items: center;
+  padding: 8px; margin-bottom: 8px;
+  border: 2px solid var(--bordo); border-left-width: 8px;
+  border-radius: var(--raggio-s); background: var(--superficie);
+}
+.riga-eq .numero-riga {
+  font-weight: 700; color: var(--testo-soft); text-align: center;
+  font-size: .95em;
+}
+.riga-eq .campo-eq {
+  font-family: var(--font-mono); font-size: 1.15em;
+  min-height: 52px; letter-spacing: .03em;
+}
+.riga-eq .azioni-riga { display: flex; gap: 4px; }
+.riga-eq .azioni-riga .btn { min-width: 44px; padding: 6px 8px; }
+.riga-eq .messaggio-riga { grid-column: 1 / -1; margin: 4px 0 0; font-size: .95em; }
+.riga-eq.esito-ok { border-left-color: var(--ok); background: var(--ok-chiaro); }
+.riga-eq.esito-errore { border-left-color: var(--attenzione); background: var(--attenzione-chiaro); }
+.riga-eq.esito-nonSo { border-left-color: var(--testo-soft); }
+@media (max-width: 520px) {
+  .riga-eq { grid-template-columns: 2em 1fr; }
+  .riga-eq .azioni-riga { grid-column: 2 / -1; justify-content: flex-end; }
+}
+
+/* Aiuti progressivi ------------------------------------------------- */
+.aiuti { display: grid; gap: 8px; }
+.aiuto-testo { border: 2px dashed var(--attenzione); background: var(--attenzione-chiaro); border-radius: var(--raggio-s); padding: 12px; }
+
+
+/* ============================================================
+   06-pdf.css
+   ============================================================ */
+/* ------------------------------------------------------------------
+   Lettore PDF e libreria personale
+   ------------------------------------------------------------------ */
+
+.pdf-barra {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  background: var(--superficie); border: 2px solid var(--bordo);
+  border-radius: var(--raggio); padding: 8px; margin-bottom: 12px;
+  position: sticky; top: calc(56px + env(safe-area-inset-top)); z-index: 30;
+}
+.pdf-barra .btn { padding: 8px 12px; min-height: 44px; }
+.pdf-pagina-campo { width: 4.4em; text-align: center; min-height: 44px; padding: 6px; }
+.pdf-conta { font-weight: 700; white-space: nowrap; }
+.pdf-sep { width: 1px; align-self: stretch; background: var(--bordo); margin: 0 2px; }
+
+.pdf-scena {
+  background: var(--superficie-2); border: 2px solid var(--bordo); border-radius: var(--raggio);
+  padding: 10px; overflow: auto; max-height: 78vh; text-align: center;
+}
+.pdf-foglio { position: relative; display: inline-block; margin: 0 auto; box-shadow: var(--ombra); background: #fff; }
+.pdf-foglio canvas { display: block; }
+.pdf-testo {
+  position: absolute; inset: 0; overflow: hidden; opacity: .25; line-height: 1;
+  transform-origin: 0 0; color: transparent;
+}
+.pdf-testo span { position: absolute; white-space: pre; transform-origin: 0 0; cursor: text; color: transparent; }
+.pdf-testo ::selection { background: rgba(60, 130, 200, .45); }
+.pdf-evid { position: absolute; border-radius: 3px; pointer-events: none; mix-blend-mode: multiply; }
+
+.pdf-vuoto { padding: 40px 16px; text-align: center; color: var(--testo-soft); }
+
+/* Menu che appare dopo la selezione del testo ---------------------- */
+.menu-selezione {
+  position: fixed; z-index: 80; max-width: min(94vw, 460px);
+  background: var(--superficie); border: 2px solid var(--primario); border-radius: var(--raggio);
+  box-shadow: var(--ombra-forte); padding: 10px;
+}
+.menu-selezione .estratto {
+  font-size: .9em; color: var(--testo-soft); max-height: 4.6em; overflow: hidden;
+  margin-bottom: 8px; border-left: 4px solid var(--bordo); padding-left: 8px;
+}
+.menu-selezione .voci { display: flex; flex-wrap: wrap; gap: 6px; }
+.menu-selezione .voci .btn { min-height: 44px; padding: 6px 10px; font-size: .92em; }
+
+/* Libreria ---------------------------------------------------------- */
+.libro { display: flex; gap: 14px; align-items: center; }
+.libro .copertina {
+  flex: 0 0 auto; width: 54px; height: 70px; border-radius: 6px;
+  background: var(--primario-chiaro); border: 2px solid var(--primario);
+  display: flex; align-items: center; justify-content: center; font-size: 1.7em;
+}
+.avanzamento { height: 12px; border-radius: 999px; background: var(--superficie-2); border: 1px solid var(--bordo); overflow: hidden; margin-top: 6px; }
+.avanzamento .riempi { height: 100%; background: var(--ok); }
+
+/* Categorie di evidenziazione -------------------------------------- */
+.cat-scelta { display: flex; flex-wrap: wrap; gap: 8px; }
+.cat-scelta button { border: 2px solid var(--bordo); border-radius: 999px; padding: 8px 14px; min-height: 44px; cursor: pointer; background: var(--superficie); font-weight: 700; }
+.cat-scelta button[aria-pressed="true"] { outline: 3px solid var(--primario); outline-offset: 2px; }
+.pallino { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.3); vertical-align: -2px; margin-right: 6px; }
+
+/* Cronologia versioni ---------------------------------------------- */
+.versioni { display: grid; gap: 6px; }
+.versioni button { text-align: left; }
+
+
+/* ============================================================
+   07-stampa.css
+   ============================================================ */
+/* ------------------------------------------------------------------
+   Stampa / "Salva come PDF" del browser — formato A4
+   ------------------------------------------------------------------ */
+
+/* Anteprima a schermo del foglio A4 (larghezza reale della carta) */
+.foglio-a4 {
+  width: 100%;
+  max-width: 210mm;
+  margin: 0 auto 20px;
+  padding: clamp(14px, 4vw, 18mm);
+  background: #ffffff;
+  color: #16242e;
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio-s);
+  box-shadow: var(--ombra);
+}
+.foglio-a4 h1, .foglio-a4 h2, .foglio-a4 h3 { color: #16242e; }
+.foglio-a4 .riga-titolo {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; border-bottom: 2px solid #16242e; padding-bottom: 8px; margin-bottom: 16px;
+}
+.foglio-a4 .esercizio {
+  break-inside: avoid; page-break-inside: avoid;
+  border-bottom: 1px solid #c9d6e0; padding: 12px 0;
+}
+.foglio-a4 .esercizio:last-child { border-bottom: none; }
+.foglio-a4 .etichette { font-size: .85em; color: #4d616f; margin: 0 0 6px; }
+.foglio-a4 .procedimento {
+  white-space: pre-wrap; font-family: var(--font-mono); font-size: .95em;
+  background: #f4f7fa; border-left: 4px solid #1d4e6f;
+  padding: 8px 10px; margin: 8px 0; border-radius: 4px;
+}
+.foglio-a4 .risultato { font-weight: 700; }
+.foglio-a4 .spazio-scrittura { border-bottom: 1px dotted #8fa3b0; height: 1.9em; }
+
+/* Visibile solo quando si stampa */
+.solo-stampa { display: none; }
+
+@media print {
+  /* Carta A4 con margini da quaderno */
+  @page { size: A4; margin: 18mm 15mm 16mm; }
+
+  /* Via tutto quello che non è contenuto */
+  .topbar, .tabbar, .toast, .modale, .righello, .righello-attivo,
+  .no-stampa, .barra-btn, .pdf-barra, .tastiera-mate, .calc-tasti,
+  .azioni, .azioni-riga, .sezione-testa .spinta, .menu-selezione,
+  .skip-link, .salvato { display: none !important; }
+
+  html, body {
+    background: #ffffff !important; color: #000000 !important;
+    font-size: 11.5pt; line-height: 1.5;
+  }
+  .main { max-width: none; padding: 0; }
+  .solo-stampa { display: block; }
+
+  /* Intestazione ripetuta in cima al foglio */
+  .intestazione-stampa {
+    border-bottom: 1.5pt solid #000; padding-bottom: 4pt; margin-bottom: 10pt;
+    font-size: 10pt;
+    display: flex; justify-content: space-between; gap: 10pt;
+  }
+  .intestazione-stampa b { font-size: 12pt; }
+
+  /* Le schede diventano semplici blocchi, senza ombre né sfondi */
+  .card, .voce, .passo, .foglio, .foglio-a4, .riga-eq, .avviso, details.pannello {
+    border: 1pt solid #999 !important; box-shadow: none !important;
+    background: #fff !important; color: #000 !important;
+    break-inside: avoid; page-break-inside: avoid;
+    margin-bottom: 6pt;
+  }
+  .foglio-a4 { border: none !important; padding: 0 !important; max-width: none; margin: 0; }
+  .card-soft, .avviso { background: #f6f6f6 !important; }
+
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+  h1 { font-size: 16pt; } h2 { font-size: 13pt; } h3 { font-size: 12pt; }
+
+  /* Testi e aree di scrittura: solo il contenuto */
+  .editor-area, .foglio-testo {
+    border: none !important; min-height: 0; height: auto;
+    font-size: 11.5pt !important; background: #fff !important; color: #000 !important;
+  }
+  .campo, .area, .campo-eq {
+    border: none !important; border-bottom: .5pt solid #666 !important;
+    background: #fff !important; color: #000 !important;
+    font-size: 11.5pt !important; min-height: 0 !important; padding: 2pt 0 !important;
+  }
+  .riga-eq { grid-template-columns: 2em 1fr; border-left-width: 1pt !important; }
+
+  /* La matematica resta leggibile */
+  .mate { font-size: 12pt; }
+  .mate mark { background: none !important; box-shadow: none !important;
+    text-decoration: underline; font-weight: 700; }
+
+  /* I pannelli a fisarmonica vengono aperti prima di stampare */
+  details.pannello > summary { list-style: none; font-weight: 700; }
+  details.pannello > summary::after { content: ""; }
+
+  a[href]::after { content: ""; }
+  img, canvas, svg { max-width: 100% !important; }
+  .tabella-scroll, .tela-wrap, .pdf-scena { overflow: visible !important; max-height: none !important; }
+}

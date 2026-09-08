@@ -1,0 +1,101 @@
+/* ------------------------------------------------------------------
+   Stampa / "Salva come PDF" del browser — formato A4
+   ------------------------------------------------------------------ */
+
+/* Anteprima a schermo del foglio A4 (larghezza reale della carta) */
+.foglio-a4 {
+  width: 100%;
+  max-width: 210mm;
+  margin: 0 auto 20px;
+  padding: clamp(14px, 4vw, 18mm);
+  background: #ffffff;
+  color: #16242e;
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio-s);
+  box-shadow: var(--ombra);
+}
+.foglio-a4 h1, .foglio-a4 h2, .foglio-a4 h3 { color: #16242e; }
+.foglio-a4 .riga-titolo {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; border-bottom: 2px solid #16242e; padding-bottom: 8px; margin-bottom: 16px;
+}
+.foglio-a4 .esercizio {
+  break-inside: avoid; page-break-inside: avoid;
+  border-bottom: 1px solid #c9d6e0; padding: 12px 0;
+}
+.foglio-a4 .esercizio:last-child { border-bottom: none; }
+.foglio-a4 .etichette { font-size: .85em; color: #4d616f; margin: 0 0 6px; }
+.foglio-a4 .procedimento {
+  white-space: pre-wrap; font-family: var(--font-mono); font-size: .95em;
+  background: #f4f7fa; border-left: 4px solid #1d4e6f;
+  padding: 8px 10px; margin: 8px 0; border-radius: 4px;
+}
+.foglio-a4 .risultato { font-weight: 700; }
+.foglio-a4 .spazio-scrittura { border-bottom: 1px dotted #8fa3b0; height: 1.9em; }
+
+/* Visibile solo quando si stampa */
+.solo-stampa { display: none; }
+
+@media print {
+  /* Carta A4 con margini da quaderno */
+  @page { size: A4; margin: 18mm 15mm 16mm; }
+
+  /* Via tutto quello che non è contenuto */
+  .topbar, .tabbar, .toast, .modale, .righello, .righello-attivo,
+  .no-stampa, .barra-btn, .pdf-barra, .tastiera-mate, .calc-tasti,
+  .azioni, .azioni-riga, .sezione-testa .spinta, .menu-selezione,
+  .skip-link, .salvato { display: none !important; }
+
+  html, body {
+    background: #ffffff !important; color: #000000 !important;
+    font-size: 11.5pt; line-height: 1.5;
+  }
+  .main { max-width: none; padding: 0; }
+  .solo-stampa { display: block; }
+
+  /* Intestazione ripetuta in cima al foglio */
+  .intestazione-stampa {
+    border-bottom: 1.5pt solid #000; padding-bottom: 4pt; margin-bottom: 10pt;
+    font-size: 10pt;
+    display: flex; justify-content: space-between; gap: 10pt;
+  }
+  .intestazione-stampa b { font-size: 12pt; }
+
+  /* Le schede diventano semplici blocchi, senza ombre né sfondi */
+  .card, .voce, .passo, .foglio, .foglio-a4, .riga-eq, .avviso, details.pannello {
+    border: 1pt solid #999 !important; box-shadow: none !important;
+    background: #fff !important; color: #000 !important;
+    break-inside: avoid; page-break-inside: avoid;
+    margin-bottom: 6pt;
+  }
+  .foglio-a4 { border: none !important; padding: 0 !important; max-width: none; margin: 0; }
+  .card-soft, .avviso { background: #f6f6f6 !important; }
+
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+  h1 { font-size: 16pt; } h2 { font-size: 13pt; } h3 { font-size: 12pt; }
+
+  /* Testi e aree di scrittura: solo il contenuto */
+  .editor-area, .foglio-testo {
+    border: none !important; min-height: 0; height: auto;
+    font-size: 11.5pt !important; background: #fff !important; color: #000 !important;
+  }
+  .campo, .area, .campo-eq {
+    border: none !important; border-bottom: .5pt solid #666 !important;
+    background: #fff !important; color: #000 !important;
+    font-size: 11.5pt !important; min-height: 0 !important; padding: 2pt 0 !important;
+  }
+  .riga-eq { grid-template-columns: 2em 1fr; border-left-width: 1pt !important; }
+
+  /* La matematica resta leggibile */
+  .mate { font-size: 12pt; }
+  .mate mark { background: none !important; box-shadow: none !important;
+    text-decoration: underline; font-weight: 700; }
+
+  /* I pannelli a fisarmonica vengono aperti prima di stampare */
+  details.pannello > summary { list-style: none; font-weight: 700; }
+  details.pannello > summary::after { content: ""; }
+
+  a[href]::after { content: ""; }
+  img, canvas, svg { max-width: 100% !important; }
+  .tabella-scroll, .tela-wrap, .pdf-scena { overflow: visible !important; max-height: none !important; }
+}

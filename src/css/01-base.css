@@ -1,0 +1,147 @@
+/* ------------------------------------------------------------------
+   STUDIO DSA OFFLINE — base, temi, tipografia
+   Nessun font e nessuna risorsa da Internet: solo font di sistema.
+   ------------------------------------------------------------------ */
+
+/* Reset leggero -------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+/* IMPORTANTE: "hidden" deve vincere sempre.
+   Senza questa riga, una regola come ".modale { display: flex }" batte la
+   regola del browser "[hidden] { display: none }": il pannello resta sullo
+   schermo, invisibile ma sopra a tutto, e si mangia ogni tocco.
+   (Bug trovato dopo la consegna: dopo l'onboarding non si poteva più
+   toccare niente.) */
+[hidden] { display: none !important; }
+img, svg, canvas { max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* Variabili di tema ---------------------------------------------- */
+:root {
+  /* colori (tema chiaro di partenza) */
+  --sfondo:        #eef2f6;
+  --superficie:    #ffffff;
+  --superficie-2:  #f4f7fa;
+  --testo:         #16242e;
+  --testo-soft:    #4d616f;
+  --bordo:         #c9d6e0;
+  --primario:      #1d4e6f;
+  --primario-chiaro:#e3eef6;
+  --su-primario:   #ffffff;
+  --ok:            #1f6b45;
+  --ok-chiaro:     #e2f3e9;
+  --attenzione:    #8a5a00;
+  --attenzione-chiaro:#fdf1d8;
+  --errore:        #99311f;
+  --errore-chiaro: #fbe6e2;
+  --evidenzia:     #ffe98a;
+  --ombra:         0 1px 2px rgba(14, 34, 48, .10), 0 4px 14px rgba(14, 34, 48, .07);
+  --ombra-forte:   0 8px 34px rgba(14, 34, 48, .22);
+
+  /* misure */
+  --raggio:        16px;
+  --raggio-s:      10px;
+  --tocco:         48px;          /* area minima toccabile (> 44px) */
+  --spazio:        16px;
+  --larghezza:     1100px;
+
+  /* tipografia regolabile dall'utente */
+  --corpo:         1.05rem;       /* dimensione testo interfaccia */
+  --font-ui:       system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-lettura:  var(--font-ui);
+  --font-mono:     ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Roboto Mono", monospace;
+}
+
+/* Temi ------------------------------------------------------------ */
+html[data-tema="crema"] {
+  --sfondo: #f2e9d8; --superficie: #fbf4e6; --superficie-2: #f5ecdb;
+  --testo: #2c2417; --testo-soft: #5d5140; --bordo: #d9c9ab;
+  --primario: #7a4a1c; --primario-chiaro: #f0e0c8; --evidenzia: #ffe08a;
+}
+html[data-tema="giallo"] {
+  --sfondo: #f6efc6; --superficie: #fdfae0; --superficie-2: #f8f2cf;
+  --testo: #2a2712; --testo-soft: #57512c; --bordo: #ddd39a;
+  --primario: #6b5a10; --primario-chiaro: #f2ebbe; --evidenzia: #ffd35c;
+}
+html[data-tema="grigio"] {
+  --sfondo: #dfe3e6; --superficie: #eff2f4; --superficie-2: #e6eaed;
+  --testo: #1e2528; --testo-soft: #4e585d; --bordo: #bcc4c9;
+  --primario: #33505e; --primario-chiaro: #dde6ea;
+}
+html[data-tema="scura"] {
+  --sfondo: #12181d; --superficie: #1c242b; --superficie-2: #232d35;
+  --testo: #e8eef3; --testo-soft: #a9bac6; --bordo: #37454f;
+  --primario: #7cc0e8; --primario-chiaro: #223642; --su-primario: #08131a;
+  --ok: #7ddba6; --ok-chiaro: #163023; --attenzione: #f0c565; --attenzione-chiaro: #33280f;
+  --errore: #f2a294; --errore-chiaro: #38201c; --evidenzia: #6d5c14;
+  --ombra: 0 1px 2px rgba(0,0,0,.5), 0 4px 14px rgba(0,0,0,.35);
+  --ombra-forte: 0 8px 34px rgba(0,0,0,.6);
+}
+html[data-tema="contrasto"] {
+  --sfondo: #000000; --superficie: #000000; --superficie-2: #101010;
+  --testo: #ffffff; --testo-soft: #f2f2f2; --bordo: #ffffff;
+  --primario: #ffee00; --primario-chiaro: #232300; --su-primario: #000000;
+  --ok: #6cff9b; --ok-chiaro: #002d12; --attenzione: #ffcf3d; --attenzione-chiaro: #2a2100;
+  --errore: #ff9a86; --errore-chiaro: #2f0d06; --evidenzia: #ffee00;
+  --ombra: none; --ombra-forte: 0 0 0 3px #ffffff;
+}
+html[data-tema="contrasto"] .card,
+html[data-tema="contrasto"] .btn,
+html[data-tema="contrasto"] .campo { border-width: 2px; }
+
+/* Font alternativi selezionabili (tutti presenti nei sistemi operativi) */
+html[data-font="verdana"]  { --font-ui: Verdana, Geneva, sans-serif; }
+html[data-font="tahoma"]   { --font-ui: Tahoma, Verdana, sans-serif; }
+html[data-font="georgia"]  { --font-ui: Georgia, "Times New Roman", serif; }
+html[data-font="mono"]     { --font-ui: var(--font-mono); }
+
+/* Scala del testo dell'interfaccia */
+html[data-testo="1"] { --corpo: 0.95rem; }
+html[data-testo="2"] { --corpo: 1.05rem; }
+html[data-testo="3"] { --corpo: 1.2rem;  }
+html[data-testo="4"] { --corpo: 1.38rem; }
+html[data-testo="5"] { --corpo: 1.6rem;  }
+
+body {
+  background: var(--sfondo);
+  color: var(--testo);
+  font-family: var(--font-ui);
+  font-size: var(--corpo);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .4em; font-weight: 700; }
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.3em; }
+h3 { font-size: 1.12em; }
+p  { margin: 0 0 .8em; }
+a  { color: var(--primario); }
+
+/* Meno movimento se il sistema lo richiede */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+/* Focus sempre ben visibile ------------------------------------- */
+:focus-visible {
+  outline: 3px solid var(--primario);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+html[data-tema="contrasto"] :focus-visible { outline-color: #ffee00; outline-width: 4px; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--primario); color: var(--su-primario);
+  padding: 12px 18px; border-radius: 0 0 var(--raggio-s) 0; font-weight: 700;
+}
+.skip-link:focus { left: 0; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

@@ -1,0 +1,302 @@
+========================================================
+ STUDIO DSA — ISTRUZIONI
+ Il tuo quaderno digitale. Funziona senza Internet.
+========================================================
+
+
+IN DUE RIGHE
+------------
+Apri il file "studio-dsa-offline.html" con un doppio clic.
+Si apre nel browser e funziona. Non serve installare niente,
+non serve registrarsi, non serve la rete.
+
+
+------------------------------------------------------------
+1. QUALE FILE DEVO USARE?
+------------------------------------------------------------
+
+Nella cartella ci sono DUE versioni della stessa applicazione.
+
+  A) studio-dsa-offline.html
+     UN SOLO FILE che contiene tutto.
+     È il più semplice: lo copi dove vuoi (chiavetta USB,
+     Desktop, cartella del telefono) e lo apri.
+     Consigliato per iPhone, iPad e per chi vuole fare in fretta.
+
+  B) index.html  +  la cartella "assets" e gli altri file
+     La stessa applicazione divisa in più file.
+     Serve se vuoi "installarla" come app (vedi il punto 5).
+     ATTENZIONE: index.html funziona SOLO se resta insieme
+     agli altri file della cartella. Se sposti index.html da
+     solo, non funziona più.
+
+Le due versioni NON si scambiano i dati fra loro se le apri
+in modi diversi: scegline una e usa sempre quella.
+(Se cambi idea, puoi spostare tutto con il BACKUP: vedi il punto 6.)
+
+
+------------------------------------------------------------
+2. WINDOWS
+------------------------------------------------------------
+
+1. Copia il file "studio-dsa-offline.html" dove vuoi,
+   per esempio sul Desktop.
+2. Doppio clic sul file.
+3. Si apre in Edge o in Chrome. Fine.
+
+Per averlo sempre a portata di mano:
+  - clic destro sul file -> "Invia a" -> "Desktop (crea collegamento)".
+
+Per aprirlo sempre con lo stesso browser (importante: i tuoi
+appunti sono salvati DENTRO il browser che usi):
+  - clic destro sul file -> "Apri con" -> "Scegli un'altra app"
+  - scegli Chrome o Edge e spunta "Usa sempre questa app".
+
+
+------------------------------------------------------------
+3. MAC
+------------------------------------------------------------
+
+1. Copia "studio-dsa-offline.html" nella cartella che preferisci.
+2. Doppio clic. Si apre in Safari (o nel browser predefinito).
+
+Se Safari fa storie:
+  - clic destro sul file -> "Apri con" -> Google Chrome.
+
+Consiglio: trascina il file nella barra laterale del Finder o
+mettilo nel Dock, così lo ritrovi subito.
+
+
+------------------------------------------------------------
+4. iPHONE, iPAD E ANDROID
+------------------------------------------------------------
+
+iPhone / iPad
+1. Salva "studio-dsa-offline.html" nell'app "File"
+   (per esempio in "Sul mio iPhone").
+   Puoi mandartelo per email e poi toccare "Salva su File".
+2. Apri l'app "File", tocca il file: si apre in Safari.
+
+   IMPORTANTE: se tocchi il file dentro l'email vedi solo
+   un'ANTEPRIMA, che non funziona davvero. Devi prima salvarlo
+   nell'app File e aprirlo da lì.
+
+3. Per ritrovarlo subito: quando è aperto in Safari, tocca il
+   pulsante "Condividi" e poi "Aggiungi a Home".
+
+Android
+1. Copia il file nella memoria del telefono (cartella Download
+   va benissimo).
+2. Apri l'app "File" o "Gestione file", tocca il file e scegli
+   di aprirlo con Chrome.
+3. Dal menu di Chrome (tre puntini) puoi scegliere
+   "Aggiungi a schermata Home".
+
+Voce che legge: su iPhone e iPad serve una voce italiana
+installata. Se non la senti, vai in
+  Impostazioni -> Accessibilità -> Contenuto pronunciato -> Voci
+e scarica una voce italiana (una volta sola, poi funziona offline).
+
+
+------------------------------------------------------------
+5. VERSIONE "INSTALLABILE" (facoltativa, per esperti)
+------------------------------------------------------------
+
+I browser permettono di installare un'app web solo se le pagine
+arrivano da un indirizzo che comincia con https:// oppure da
+localhost. Aprendo un file con il doppio clic questo non succede,
+quindi il pulsante "Installa" non compare.
+
+Non è un problema: l'applicazione funziona lo stesso, in tutte
+le sue parti. Il "service worker" e il pulsante di installazione
+sono solo comodità in più.
+
+Se proprio vuoi la versione installabile ti serve un piccolo
+server locale. Nella cartella c'è "server-locale.mjs":
+serve Node.js e questi comandi (solo per chi se la sente):
+
+    node server-locale.mjs
+
+poi apri     http://localhost:8123
+
+RIPETO: NON è necessario. La versione normale funziona senza
+niente di tutto questo.
+
+
+------------------------------------------------------------
+6. IL BACKUP (leggi questo, è importante)
+------------------------------------------------------------
+
+Tutto quello che scrivi (appunti, compiti, flashcard, formule,
+mappe, note sui PDF) è salvato DENTRO il browser di quel
+dispositivo. Non è nel file .html.
+
+Questo vuol dire che:
+  - nessuno può leggere i tuoi dati: restano lì;
+  - MA se cancelli la cronologia del browser scegliendo anche
+    "dati dei siti", i tuoi appunti spariscono.
+
+Quindi, ogni tanto (per esempio una volta a settimana):
+
+  Impostazioni  ->  CREA BACKUP
+
+Ti salva un file chiamato "studio-dsa-backup.json".
+Tienilo in una cartella sicura o su una chiavetta.
+
+Per rimettere dentro i dati (anche su un altro computer):
+
+  Impostazioni  ->  RIPRISTINA BACKUP  ->  scegli il file
+
+Nel backup NON entrano i file PDF veri e propri, perché sono
+troppo grandi: entrano però le tue note, le evidenziazioni e i
+segnalibri. Basterà riaprire il PDF e ritroverai tutto.
+
+
+------------------------------------------------------------
+7. I PDF
+------------------------------------------------------------
+
+- Vai su "PDF e libri" e tocca "Apri un PDF".
+- Il PDF resta sul tuo dispositivo: non viene mandato da
+  nessuna parte.
+- Con "Modalità DSA" il testo della pagina viene riscritto
+  grande, spaziato e con lo sfondo che preferisci.
+- Con il pulsante ASCOLTA la pagina viene letta ad alta voce
+  (se il dispositivo ha una voce italiana).
+- Selezionando un pezzo di testo compare un menu per:
+  evidenziare, scrivere una nota, creare una flashcard,
+  aggiungerlo agli appunti, alla mappa o portarlo in matematica.
+
+Se una pagina è una SCANSIONE (una fotografia della pagina),
+dentro non c'è testo: l'applicazione te lo dice chiaramente e
+non inventa niente. In quel caso puoi ingrandire, usare il
+righello, oppure scrivere tu la parte che ti serve.
+
+
+------------------------------------------------------------
+7-ter. DAL LIBRO AL QUADERNO: "LO RISOLVO IO"
+------------------------------------------------------------
+
+Questo è il modo consigliato di fare gli esercizi di algebra.
+
+  1. Apri il PDF del libro e trova l'esercizio.
+  2. Seleziona il testo con il dito (o con il mouse).
+  3. Dal menu che compare, tocca "🔢 Matematica".
+  4. Ti ritrovi in "✍️ Lo risolvo io" con l'equazione già scritta
+     nella prima riga (l'app toglie da sola il numero
+     dell'esercizio e le parole come "Risolvi la seguente").
+     Controlla che sia stata copiata bene: puoi correggerla.
+
+  5. Tocca "⬇️ Ricopia la riga qui sotto".
+     Compare una riga nuova, identica a quella sopra.
+  6. Cambia solo quello che devi cambiare, come faresti sul
+     quaderno.
+  7. Tocca ✓ accanto alla riga: l'app ti dice se la riga nuova
+     dice ancora la stessa cosa di quella sopra.
+       ✅ verde  = il passaggio è giusto (anche se non è finito)
+       🤔 giallo = qualcosa è cambiato che non doveva cambiare
+  8. Avanti così, una riga alla volta, fino a x = qualcosa.
+  9. "✅ Ho finito, controlla" ti dice se ci sei arrivato.
+
+Se ti blocchi:
+  "💡 Che cosa faccio adesso?" ti dice la MOSSA successiva
+  (per esempio: "togli 7 da tutte e due le parti"), non la
+  soluzione.
+
+Solo dopo, se vuoi:
+  "👀 Fammela vedere risolta" passa alla risoluzione automatica
+  con tutti i passaggi. Se non hai ancora provato niente, l'app
+  ti chiede se sei sicuro: provare da soli, anche sbagliando,
+  è il motivo per cui esiste questa schermata.
+
+Il lavoro resta salvato: se chiudi e riapri, ritrovi le tue
+righe dove le avevi lasciate.
+
+
+------------------------------------------------------------
+7-bis. LE IMMAGINI NELLE MAPPE
+------------------------------------------------------------
+
+In "Mappe" puoi mettere una figura dentro ogni nodo: spesso si
+ricorda meglio un disegno che una parola.
+
+  1. tocca il nodo per sceglierlo;
+  2. tocca "Metti un'immagine";
+  3. scegli una foto dal dispositivo.
+     Su telefono e tablet il selettore propone anche la
+     FOTOCAMERA: puoi fotografare direttamente una figura del
+     libro.
+
+L'immagine viene rimpicciolita in automatico (una foto da
+3 MB diventa circa 20 KB), quindi non appesantisce l'app e
+finisce anche dentro il backup.
+
+Le immagini restano nella mappa quando la esporti in PNG o in
+SVG, e non escono mai dal dispositivo.
+
+
+------------------------------------------------------------
+7-quater. STAMPARE (e salvare in PDF)
+------------------------------------------------------------
+
+In alto a destra, in OGNI schermata, c'è il pulsante 🖨️.
+Stampa quello che stai guardando, già impaginato in A4:
+via i menu e i pulsanti, e in cima al foglio compaiono il
+titolo, il tuo nome e la data.
+
+Per avere un PDF invece della carta: nella finestra di stampa
+scegli "Salva come PDF" (Windows/Mac) come stampante.
+
+Scorciatoia da tastiera: Ctrl + P   (su Mac ⌘ + P).
+
+IL QUADERNO DI MATEMATICA SU FOGLIO
+  Matematica -> Il mio quaderno -> "🖨️ Vedi e stampa il quaderno"
+
+  Vedi il tuo lavoro impaginato su un foglio A4 vero, prima
+  di stampare. Puoi scegliere:
+    - tutto il quaderno oppure un solo argomento;
+    - solo gli esercizi da una certa data in poi;
+    - con o senza i procedimenti;
+    - "foglio di ripasso": stampa solo i testi degli esercizi,
+      con le righe vuote sotto, per rifarli da capo prima
+      della verifica.
+
+
+------------------------------------------------------------
+8. SE QUALCOSA NON VA
+------------------------------------------------------------
+
+"Non si apre / vedo solo codice"
+  Il file è stato salvato con l'estensione sbagliata.
+  Deve finire per .html (non .txt, non .html.txt).
+
+"Non legge ad alta voce"
+  Il dispositivo non ha una voce italiana installata:
+  vedi il punto 4. Su Windows: Impostazioni -> Data/ora e lingua
+  -> Voce -> Aggiungi voci.
+
+"Ho perso gli appunti"
+  Hai cancellato i dati del browser, oppure hai aperto il file
+  con un browser diverso da quello di prima. Riapri con lo stesso
+  browser. Se hai un backup, ripristinalo.
+
+"Il PDF non si apre"
+  Se usi la versione con più file, controlla che la cartella
+  "assets" sia rimasta accanto a index.html.
+
+"È tutto troppo piccolo / troppo grande"
+  Impostazioni -> Come vedo l'app. Cambia quanto vuoi:
+  le impostazioni restano salvate.
+
+
+------------------------------------------------------------
+9. PRIVACY
+------------------------------------------------------------
+
+I tuoi appunti e i tuoi dati rimangono sul tuo dispositivo.
+Questa applicazione non invia i tuoi contenuti a Internet.
+
+Nessun account, nessuna pubblicità, nessun tracciamento,
+nessuna statistica, nessun cookie di terze parti.
+
+========================================================
